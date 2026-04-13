@@ -13,11 +13,8 @@
 body {
   margin: 0;
   padding: 0;
-  background: radial-gradient(
-    circle at 50% 50%,
-    var(--bg-center) 0%,
-    var(--bg-outer) 100%
-  );
+  /* Removed the background gradient here to move it to the ::before element */
+  background-color: var(--bg-outer);
   color: var(--text-main);
   font-family:
     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
@@ -29,6 +26,29 @@ body {
   width: 100vw;
   overflow: hidden;
   text-align: center;
+  position: relative; /* Added so the background stays contained */
+}
+
+body::before {
+  content: "";
+  position: absolute;
+
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(15, 4, 45, 0.7) 0%,
+      rgba(5, 2, 18, 0.95) 100%
+    ),
+    url("Reggia.jpeg");
+  background-size: cover;
+  background-position: center;
+
+  z-index: 0;
 }
 
 body::after {
@@ -58,6 +78,7 @@ h1 {
   font-size: clamp(2.2rem, 8vw, 3.8rem);
   font-weight: 700;
   line-height: 1.1;
+  margin-top: 40px;
   margin-bottom: 1.5rem;
   letter-spacing: -0.02em;
 }
@@ -77,6 +98,7 @@ button {
   background-color: var(--orange);
   color: white;
   border: none;
+  margin-top: 64px;
   padding: 16px 36px; /* Smaller button sizing */
   font-size: 1.05rem;
   font-weight: 600;
@@ -102,6 +124,7 @@ button:hover {
   font-weight: 200;
   font-style: italic;
   letter-spacing: 1px;
+  margin-top: 60px;
 }
 
 .line {
@@ -111,14 +134,30 @@ button:hover {
   margin: 30px auto;
 }
 
-footer {
+/*footer {
   position: absolute;
   bottom: 40px;
-  font-size: 0.7rem;
+  font-size: 1rem;
   letter-spacing: 4px;
   color: rgba(255, 255, 255, 0.3);
   width: 100%;
   z-index: 10;
+}*/
+
+footer {
+  position: absolute;
+  bottom: 40px;
+  font-size: 1rem;
+  letter-spacing: 4px;
+  color: rgba(255, 255, 255, 0.3);
+  width: 100%;
+  z-index: 10;
+
+  /* Flexbox rules to stack items vertically */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px; /* Controls the vertical space between each name */
 }
 
 .fade-in {
@@ -140,7 +179,29 @@ footer {
   main {
     padding: 16px;
   }
+
   h1 {
     margin-bottom: 1rem;
   }
+}
+
+.back-arrow {
+  position: fixed;
+  top: 15px;
+  left: 20px;
+  z-index: 100;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  color: var(--text-dim);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.back-arrow:hover {
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+  color: var(--text-main);
 }
